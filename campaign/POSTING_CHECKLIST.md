@@ -1,24 +1,14 @@
-# Daily Posting Checklist
+# Posting Checklist — superseded
 
-Run this before and after every post. Source: Boathouse IG campaign brief.
+This was a 10-item checklist tied to the old daily-log tracker. It's gone in favor of the
+[campaign hub](https://claude.ai/code/artifact/31d47080-873c-4742-90af-e4295aeb0c8e), which
+reduces the whole thing to:
 
-## Before posting
+1. Pick the hook it hands you (or shuffle for a different one)
+2. Copy each of the 3 captions, post them
+3. Tap "+1 done" when the boat's posted
+4. Reply fast if a DM comes in, tap "+1 DM"
 
-- [ ] Hook selected and logged in `Goaldenway_Boathouse_Tracker.xlsx` → **Hook Bank** (Hook ID matches what you'll use in the caption)
-- [ ] Caption written: hook + service mention (if applicable) + CTA (see `CAPTIONS.md`)
-- [ ] Format (A/B/C) matches the day's slot in `CONTENT_CALENDAR.md`
-- [ ] Posting time set — 6 PM or 10 AM test slot
-- [ ] Row for the day is ready in **Daily Log** tab (Format, Hook ID, Posting Time filled in)
+No pre-flight checklist, no numbers to log unless a DM actually arrives.
 
-## After posting (at 24 hours)
-
-- [ ] Reply to any DMs within 5 minutes of receipt
-- [ ] Screenshot the Insights screen
-- [ ] Enter the numbers into **Daily Log**: Views, Watch Time %, Likes, Saves, Shares, DMs, Comments — that's it, every column there feeds the Hook Bank / Format Comparison / Boss Summary formulas
-- [ ] Anything worth flagging (a slow DM reply, a standout buying-signal comment, which format/hook a DM referenced) goes in the Notes column — no dedicated column for it anymore, on purpose
-
-## End of day / end of week
-
-- [ ] End-of-day entry complete in **Daily Log** (every column filled, no blanks)
-- [ ] By Day 6: start reviewing **Format Comparison** and **Hook Bank** tabs to plan the Day 7 repeat and the Week 2+ pivot
-- [ ] By Day 7: **Boss Presentation Summary** tab has real numbers — screenshot or print it for the pitch
+Kept here for history.
