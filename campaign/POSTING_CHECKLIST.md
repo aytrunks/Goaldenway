@@ -12,12 +12,10 @@ Run this before and after every post. Source: Boathouse IG campaign brief.
 
 ## After posting (at 24 hours)
 
-- [ ] Reply to any DMs within 5 minutes of receipt — log response time in **Daily Log**
-- [ ] Screenshot the Insights screen (Views, Watch Time, Drop-off, Likes, Saves, Shares, Comments)
-- [ ] Enter the numbers into **Daily Log**: Views, Watch Time %, Drop-off Rate %, Likes, Saves, Shares, DMs, Comments
-- [ ] Note comment quality — buying signal vs. scroll compliment — in the "Comments - Buying Signal (#)" column
-- [ ] Note which format/hook any DMs referenced, in the Notes column
-- [ ] Mark "Screenshot Taken" = Y in **Daily Log**
+- [ ] Reply to any DMs within 5 minutes of receipt
+- [ ] Screenshot the Insights screen
+- [ ] Enter the numbers into **Daily Log**: Views, Watch Time %, Likes, Saves, Shares, DMs, Comments — that's it, every column there feeds the Hook Bank / Format Comparison / Boss Summary formulas
+- [ ] Anything worth flagging (a slow DM reply, a standout buying-signal comment, which format/hook a DM referenced) goes in the Notes column — no dedicated column for it anymore, on purpose
 
 ## End of day / end of week
 
