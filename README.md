@@ -15,6 +15,13 @@ tracks exactly two numbers — boats posted, DMs received — as tap counters. N
 log, no checklist. When a boat's done, tap "+1 done" and it moves to the next hook automatically.
 When a DM comes in, tap "+1 DM" and reply fast — that's the only thing that matters early on.
 
+**What's inside:**
+- **Current hook picker** — shuffle through pre-loaded hooks or tap "Generate new" for fresh high-quality hooks on demand
+- **3 copy-ready captions** — Instagram (long-form, short-form, carousel) + Facebook variants ready to paste
+- **Lead capture section** — unified text number for collecting leads, with 4 quick handoff scripts for common DM scenarios (pricing, turnaround, booking, first reply)
+- **Boss summary button** — one-tap copy: "Posted N boats, M DMs in"
+- **Full hook bank** — browse all 23 pre-written hooks (13 Reynolds-style + 10 value-focused)
+
 There's a "Copy a quick update for your boss" button that generates the whole pitch: *"Posted
 content from N boats, M DMs in."* That's the proof-of-concept, not a spreadsheet review.
 

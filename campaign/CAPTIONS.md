@@ -5,7 +5,14 @@ per-day: each boat gets all 3 formats (long-form, short-form, carousel) from one
 using one hook across all three. **Use the
 [campaign hub](https://claude.ai/code/artifact/31d47080-873c-4742-90af-e4295aeb0c8e)** for live
 captions — it generates all 3 from whichever hook is current and copies them straight to your
-clipboard. This file is now just the hook-writing reference below.
+clipboard.
+
+The hub has two ways to get hooks:
+1. **Browse & shuffle** — pick from the 23 pre-loaded hooks (13 Reynolds-style R1–R13, 10 value-focused V1–V10)
+2. **Generate new** — tap "✨ Generate new" to create a fresh high-quality hook on demand using the Reynolds techniques below
+
+This file is now just the hook-writing reference for the 8 techniques, so you can write your own
+generated hooks once you see which Reynolds moves land with your audience.
 
 Template:
 ```
@@ -41,3 +48,17 @@ which ones land.
 
 All 13 Reynolds-style hooks (and all 10 Value hooks) are also in the **Hook Bank** tab of the
 tracker and in the mobile campaign hub, with copy buttons.
+
+---
+
+## How the auto-generator works
+
+The "Generate new" button in the campaign hub builds fresh hooks using the 8 techniques above. It:
+
+1. **Picks a random technique** — Meta admission? Self-deprecation? Jargon roast? etc.
+2. **Fills in a template** — Each technique has 2–3 template structures (e.g. "I [personal fail] for a living and still can't [relatable fail]...")
+3. **Randomizes the variables** — Swaps in different boat problems, personal jokes, and punchlines to keep them fresh
+
+Result: Every tap generates a new, high-quality hook in the style of your pre-written ones. No two are exactly the same, but all follow the same Reynolds playbook.
+
+When a generated hook lands especially well with your audience, steal the specific joke structure or variable combination and add it to the pre-loaded bank — that's how you refine the system over time.
