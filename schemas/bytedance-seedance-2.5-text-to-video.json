@@ -1,0 +1,54 @@
+{
+  "model": "bytedance/seedance-2.5/text-to-video",
+  "category": "text2video",
+  "source": "https://dash.higgsfield.ai/models/bytedance/seedance-2.5/text-to-video/llms.txt",
+  "pricing": {
+    "formula": "ceil((input_video_seconds + generated_seconds) * width * height * 24 / 1024) video tokens",
+    "per_1k_tokens": {
+      "480p": 0.0214,
+      "720p": 0.0214
+    }
+  },
+  "schema": {
+    "type": "object",
+    "required": ["prompt"],
+    "additionalProperties": false,
+    "properties": {
+      "prompt": {
+        "type": "string",
+        "minLength": 1,
+        "description": "Write your prompt here"
+      },
+      "duration": {
+        "type": "integer",
+        "default": 5,
+        "minimum": 4,
+        "maximum": 30
+      },
+      "resolution": {
+        "type": "string",
+        "default": "720p",
+        "enum": ["480p", "720p"]
+      },
+      "aspect_ratio": {
+        "type": "string",
+        "default": "16:9",
+        "enum": ["16:9", "4:3", "1:1", "3:4", "9:16", "21:9"]
+      },
+      "bitrate_mode": {
+        "type": "string",
+        "default": "high",
+        "enum": ["standard", "high"]
+      },
+      "output_format": {
+        "type": "string",
+        "default": "mp4",
+        "enum": ["mp4", "mov"]
+      },
+      "generate_audio": {
+        "type": "boolean",
+        "default": true
+      }
+    }
+  }
+}

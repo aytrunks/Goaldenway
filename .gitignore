@@ -1,3 +1,5 @@
 out/
+.higgsfield/
+.env
 __pycache__/
 *.pyc
