@@ -1,12 +1,20 @@
 {
   "name": "shot_2_carl_illegal",
-  "model": "seedance-2.5",
-  "reference_image": "assets/shot_2_balcony_reference.png",
-  "duration": 2,
-  "resolution": "720p",
-  "aspect_ratio": "9:16",
-  "seed": null,
-  "prompt": "Carl, a friendly green alligator butler in a black tuxedo with white shirt, vest and black bow tie, hangs upside down outside the balcony and drops suddenly into frame. He holds his silver serving tray perfectly steady, with the cloche, the drink and the white service napkin. Carl looks directly at the seated vacationer with a charming, offended smirk and clearly says: \"That's illegal in Southwest Florida.\" He delivers the line with classy disbelief, like a butler politely correcting an outrageous mistake, his mouth movement synced naturally to the exact words. The vacationer stays seated in the white plastic chair and looks up in confused surprise. Setting: a Southwest Florida condo balcony at golden hour, turquoise Gulf water, beach, palm trees, orange-pink sunset, balcony railing, glass patio table with a phone, sunglasses and a half-finished drink. Look: realistic 35mm tropical social-ad film, warm Kodak-style grain, shallow depth of field, golden-hour glow, humid Florida air, soft ocean sparkle, palm shadows, natural cinematic lighting. Carl is a premium animated-real mascot integrated into the real balcony environment. Camera: one move only, a subtle handheld push-in toward Carl and the seated vacationer, natural and premium, not shaky. Audio: the spoken line plus light ambient ocean breeze only, no music. Acting is funny, polished and controlled; Carl is magical, confident and slightly mischievous, never scary.",
+  "model": "bytedance/seedance-2.5/text-to-video",
   "dialogue": "That's illegal in Southwest Florida.",
-  "negative_prompt": "scary, threatening, roaring, open jaws, sharp aggressive monster teeth, distorted face, distorted tuxedo, distorted tray, distorted cloche, distorted drink, distorted hands, distorted body, extra limbs, extra fingers, extra characters, extra people, extra animals, text, captions, subtitles, logos, watermarks, app interface, fake UI, changed balcony layout, changed chair, changed table, fantasy setting, music"
+  "reference_frame": "assets/shot_2_balcony_reference.png",
+  "notes": [
+    "duration is 4 because the seedance-2.5 schema enforces a 4s minimum; the brief asked for 2s. Trim in post: ffmpeg -i out/shot_2_carl_illegal.mp4 -t 2 -c copy out/shot_2_2s.mp4",
+    "the schema is additionalProperties:false and has no negative_prompt field, so the don't-list is folded into the prompt text",
+    "this model id is text-to-video and accepts no image input; reference_frame is kept for continuity and for swapping in an image-to-video model id"
+  ],
+  "input": {
+    "prompt": "Carl, a friendly green alligator butler in a black tuxedo with a white shirt, vest and black bow tie, hangs upside down outside a balcony and drops suddenly into frame. He holds his silver serving tray perfectly steady, with the cloche, the drink and the white service napkin. Carl looks directly at the seated vacationer with a charming, offended smirk and clearly says, lips synced to the words: \"That's illegal in Southwest Florida.\" He delivers it with classy disbelief, like a butler politely correcting an outrageous mistake, friendly and composed throughout. The vacationer stays seated in his white plastic chair and looks up in confused surprise. Setting: a Southwest Florida condo balcony at golden hour, turquoise Gulf water, beach, palm trees, orange-pink sunset, balcony railing, glass patio table with a phone, sunglasses and a half-finished drink, the layout unchanged. Look: realistic 35mm tropical social-ad film, warm Kodak-style grain, shallow depth of field, golden-hour glow, humid Florida air, soft ocean sparkle, palm shadows, natural cinematic lighting; Carl is a premium animated-real mascot seamlessly integrated into the real balcony. Camera: one move only, a subtle smooth handheld push-in toward Carl and the seated vacationer, premium and steady, not shaky. Audio: only the spoken line over a light ambient ocean breeze, no music. Carl stays gentle, magical, confident and slightly mischievous, never scary, never roaring, with no bared or sharp teeth and no aggression. His face, tuxedo, tray, cloche, drink, hands and body stay stable and undistorted with correct anatomy and no extra limbs. Only these two characters, no other people and no other animals. No on-screen text, captions, logos, watermarks or interface graphics.",
+    "duration": 4,
+    "resolution": "720p",
+    "aspect_ratio": "9:16",
+    "bitrate_mode": "high",
+    "output_format": "mp4",
+    "generate_audio": true
+  }
 }
