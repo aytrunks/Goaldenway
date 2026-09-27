@@ -1,0 +1,430 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Goaldenway Tracker</title>
+<style>
+  :root {
+    --bg: #f7f6f2; --panel: #ffffff; --text: #1d1d1b; --muted: #6b6a64; --line: #e4e2da;
+    --accent: #b8860b; --accent-soft: #f5ecd4; --good: #2f7d4f; --bad: #b3413b; --input: #fbfaf7;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #141412; --panel: #1d1c1a; --text: #ecebe6; --muted: #9c9a92; --line: #33322e;
+      --accent: #e0b04a; --accent-soft: #3a311c; --good: #5fbf85; --bad: #e0736c; --input: #171614;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #141412; --panel: #1d1c1a; --text: #ecebe6; --muted: #9c9a92; --line: #33322e;
+    --accent: #e0b04a; --accent-soft: #3a311c; --good: #5fbf85; --bad: #e0736c; --input: #171614;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--text);
+    font: 15px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+  .wrap { max-width: 1100px; margin: 0 auto; padding: 24px 16px 64px; }
+  header { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; justify-content: space-between; }
+  h1 { font-size: 22px; margin: 0; letter-spacing: -0.01em; }
+  h1 span { color: var(--accent); }
+  h2 { font-size: 16px; margin: 0 0 12px; }
+  .muted { color: var(--muted); font-size: 13px; }
+  .panel { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 18px; margin-top: 16px; }
+  .grid { display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); }
+  .stat { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; }
+  .stat .label { color: var(--muted); font-size: 12px; text-transform: uppercase; letter-spacing: 0.04em; }
+  .stat .value { font-size: 26px; font-weight: 650; font-variant-numeric: tabular-nums; margin-top: 2px; }
+  .bar { height: 12px; background: var(--line); border-radius: 99px; overflow: hidden; margin-top: 14px; }
+  .bar > div { height: 100%; background: var(--accent); border-radius: 99px; transition: width .3s; }
+  table { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; }
+  th, td { text-align: left; padding: 8px 6px; border-bottom: 1px solid var(--line); vertical-align: middle; }
+  th { color: var(--muted); font-weight: 500; font-size: 12px; text-transform: uppercase; letter-spacing: 0.04em; }
+  .table-scroll { overflow-x: auto; }
+  input, select, button { font: inherit; color: var(--text); }
+  input, select { background: var(--input); border: 1px solid var(--line); border-radius: 8px; padding: 6px 8px; min-width: 0; width: 100%; }
+  button { background: var(--accent-soft); border: 1px solid var(--line); border-radius: 8px; padding: 6px 12px; cursor: pointer; }
+  button.primary { background: var(--accent); color: #1d1d1b; border-color: var(--accent); font-weight: 600; }
+  button.link { background: none; border: none; color: var(--bad); padding: 4px; }
+  .form-row { display: grid; gap: 8px; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); align-items: end; margin-top: 12px; }
+  .form-row label { font-size: 12px; color: var(--muted); display: grid; gap: 4px; }
+  .tabs { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 20px; }
+  .tabs button { background: transparent; }
+  .tabs button[aria-selected="true"] { background: var(--accent-soft); border-color: var(--accent); }
+  .hidden { display: none; }
+  .steps { list-style: none; padding: 0; margin: 0; display: grid; gap: 10px; }
+  .steps li { display: flex; gap: 10px; align-items: flex-start; }
+  .steps input { width: 18px; height: 18px; margin-top: 2px; flex: none; }
+  .good { color: var(--good); } .bad { color: var(--bad); }
+  .toolbar { display: flex; gap: 8px; flex-wrap: wrap; }
+  .calc-out td:last-child { font-weight: 600; text-align: right; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div>
+      <h1>Goaldenway <span>→ $25K/month</span></h1>
+      <div class="muted">Learn → Templates → Leads → Retain &amp; ascend → Repeat</div>
+    </div>
+    <div class="toolbar">
+      <button id="export">Export</button>
+      <button id="import">Import</button>
+      <input type="file" id="importFile" accept="application/json" class="hidden">
+    </div>
+  </header>
+
+  <section class="panel">
+    <div class="grid">
+      <div class="stat"><div class="label">This month</div><div class="value" id="sMonth">$0</div></div>
+      <div class="stat"><div class="label">MRR (retainers)</div><div class="value" id="sMrr">$0</div></div>
+      <div class="stat"><div class="label">Gap to goal</div><div class="value" id="sGap">$0</div></div>
+      <div class="stat"><div class="label">Open pipeline</div><div class="value" id="sPipe">$0</div></div>
+    </div>
+    <div class="bar"><div id="progress" style="width:0%"></div></div>
+    <div class="muted" id="progressLabel" style="margin-top:6px"></div>
+  </section>
+
+  <nav class="tabs" role="tablist">
+    <button role="tab" data-tab="clients" aria-selected="true">Clients</button>
+    <button role="tab" data-tab="pipeline">Pipeline</button>
+    <button role="tab" data-tab="scorecard">Weekly scorecard</button>
+    <button role="tab" data-tab="calculator">$25K calculator</button>
+    <button role="tab" data-tab="roadmap">Roadmap</button>
+  </nav>
+
+  <!-- Clients -->
+  <section class="panel" data-panel="clients">
+    <h2>Clients &amp; revenue</h2>
+    <div class="muted">Retainers count toward MRR while they're active. Projects count in the month they start.</div>
+    <div class="table-scroll">
+      <table>
+        <thead><tr><th>Client</th><th>Template</th><th>Tier</th><th>Amount</th><th>Start</th><th>Status</th><th></th></tr></thead>
+        <tbody id="clientRows"></tbody>
+      </table>
+    </div>
+    <form id="clientForm" class="form-row">
+      <label>Client<input name="name" required></label>
+      <label>Template<select name="template"></select></label>
+      <label>Tier<select name="tier"></select></label>
+      <label>Amount ($)<input name="amount" type="number" min="0" step="50" required></label>
+      <label>Start<input name="start" type="date" required></label>
+      <button class="primary" type="submit">Add client</button>
+    </form>
+  </section>
+
+  <!-- Pipeline -->
+  <section class="panel hidden" data-panel="pipeline">
+    <h2>Pipeline</h2>
+    <div class="muted" id="pipeSummary"></div>
+    <div class="table-scroll">
+      <table>
+        <thead><tr><th>Prospect</th><th>Source</th><th>Template</th><th>Value</th><th>Stage</th><th></th></tr></thead>
+        <tbody id="dealRows"></tbody>
+      </table>
+    </div>
+    <form id="dealForm" class="form-row">
+      <label>Prospect<input name="name" required></label>
+      <label>Source<select name="source"></select></label>
+      <label>Template<select name="template"></select></label>
+      <label>Value ($)<input name="value" type="number" min="0" step="50" required></label>
+      <button class="primary" type="submit">Add deal</button>
+    </form>
+  </section>
+
+  <!-- Scorecard -->
+  <section class="panel hidden" data-panel="scorecard">
+    <h2>Weekly scorecard</h2>
+    <div class="muted">Log the activities that correlate with revenue. Green means the target was hit.</div>
+    <div class="table-scroll">
+      <table>
+        <thead><tr id="scoreHead"></tr></thead>
+        <tbody id="scoreRows"></tbody>
+      </table>
+    </div>
+    <form id="scoreForm" class="form-row"></form>
+  </section>
+
+  <!-- Calculator -->
+  <section class="panel hidden" data-panel="calculator">
+    <h2>What it takes to hit the goal</h2>
+    <div class="muted">Enter your real numbers. The calculator works backwards from the target to the weekly activity you need.</div>
+    <form id="calcForm" class="form-row"></form>
+    <div class="table-scroll" style="margin-top:16px">
+      <table class="calc-out"><tbody id="calcOut"></tbody></table>
+    </div>
+  </section>
+
+  <!-- Roadmap -->
+  <section class="panel hidden" data-panel="roadmap">
+    <h2>Roadmap checklist</h2>
+    <ul class="steps" id="steps"></ul>
+  </section>
+</div>
+
+<script>
+const TEMPLATES = ["Speed-to-Lead", "Inbox Triage", "Client Onboarding", "Lead Gen Engine", "AI Receptionist", "Custom"];
+const TIERS = {
+  "Starter": "project", "System": "project", "Add-on": "project",
+  "Growth retainer": "retainer", "Scale retainer": "retainer"
+};
+const SOURCES = ["Cold email", "Upwork", "Fiverr", "Community", "Referral", "Upsell"];
+const STAGES = ["Lead", "Replied", "Call booked", "Proposal sent", "Won", "Lost"];
+const SCORE_FIELDS = [
+  { key: "emails", label: "Emails sent", target: 1000 },
+  { key: "proposals", label: "Upwork proposals", target: 25 },
+  { key: "posts", label: "Community posts", target: 15 },
+  { key: "looms", label: "Looms sent", target: 10 },
+  { key: "replies", label: "Positive replies", target: 10 },
+  { key: "calls", label: "Calls held", target: 3 },
+  { key: "closed", label: "Deals closed", target: 1 },
+  { key: "hours", label: "Build/learn hrs", target: 10 }
+];
+const CALC_FIELDS = [
+  { key: "target", label: "Monthly target ($)", def: 25000 },
+  { key: "avgRetainer", label: "Avg retainer ($/mo)", def: 2400 },
+  { key: "avgProject", label: "Avg project ($)", def: 3000 },
+  { key: "projectsPerMonth", label: "New projects / month", def: 2 },
+  { key: "closeRate", label: "Call close rate (%)", def: 20 },
+  { key: "replyToCall", label: "Positive reply → call (%)", def: 50 },
+  { key: "positiveRate", label: "Cold email positive reply (%)", def: 2 },
+  { key: "coldShare", label: "Share of calls from cold email (%)", def: 60 }
+];
+const STEPS = [
+  "Pick the stack: Make.com + Airtable + Claude API",
+  "Finish the 8 builds in the 60-hour curriculum (playbook/01)",
+  "Build Template 1: Speed-to-Lead, then record the demo Loom",
+  "Build Template 2: Inbox Triage, then record the demo Loom",
+  "Build Template 3: Client Onboarding, and run it on your own business",
+  "Build Template 4: Lead Gen Engine, and run it on your own ICP",
+  "Build Template 5: AI Receptionist, then record the demo Loom",
+  "Launch the Upwork profile and 5 Fiverr gigs",
+  "Buy the cold email domains and inboxes, and start warmup",
+  "Join 2 niche communities and start the daily 30-minute routine",
+  "Land the first paying client",
+  "Reach $1K in a month: reinvest in email infrastructure",
+  "Convert your first client to a retainer",
+  "Reach $5K MRR: hire a part-time VA",
+  "Reach $15K/month: every new client moves onto a retainer",
+  "Reach $25K/month"
+];
+
+const KEY = "goaldenway:v1";
+const blank = () => ({ clients: [], deals: [], weeks: [], steps: {}, calc: {} });
+let state = load();
+
+function load() {
+  try { return Object.assign(blank(), JSON.parse(localStorage.getItem(KEY)) || {}); }
+  catch { return blank(); }
+}
+function save() {
+  try { localStorage.setItem(KEY, JSON.stringify(state)); } catch {}
+  render();
+}
+const $ = (s) => document.querySelector(s);
+const money = (n) => "$" + Math.round(n).toLocaleString();
+const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+const uid = () => Math.random().toString(36).slice(2, 10);
+const opts = (list, sel) => list.map((o) => `<option${o === sel ? " selected" : ""}>${esc(o)}</option>`).join("");
+const today = () => new Date().toISOString().slice(0, 10);
+const monthKey = (d) => String(d).slice(0, 7);
+
+function metrics() {
+  const nowMonth = monthKey(today());
+  const active = state.clients.filter((c) => c.status === "Active");
+  const mrr = active.filter((c) => TIERS[c.tier] === "retainer").reduce((s, c) => s + +c.amount, 0);
+  const projects = state.clients
+    .filter((c) => TIERS[c.tier] === "project" && monthKey(c.start) === nowMonth && c.status !== "Churned")
+    .reduce((s, c) => s + +c.amount, 0);
+  const open = state.deals.filter((d) => d.stage !== "Won" && d.stage !== "Lost").reduce((s, d) => s + +d.value, 0);
+  const retainers = active.filter((c) => TIERS[c.tier] === "retainer").length;
+  return { mrr, month: mrr + projects, open, retainers };
+}
+
+function renderStats() {
+  const goal = +(state.calc.target || 25000);
+  const m = metrics();
+  $("#sMonth").textContent = money(m.month);
+  $("#sMrr").textContent = money(m.mrr);
+  $("#sGap").textContent = money(Math.max(0, goal - m.month));
+  $("#sPipe").textContent = money(m.open);
+  const pct = Math.min(100, (m.month / goal) * 100);
+  $("#progress").style.width = pct + "%";
+  $("#progressLabel").textContent = `${pct.toFixed(1)}% of ${money(goal)} this month · ${m.retainers} active retainer${m.retainers === 1 ? "" : "s"}`;
+}
+
+function renderClients() {
+  const rows = [...state.clients].sort((a, b) => String(b.start).localeCompare(a.start));
+  $("#clientRows").innerHTML = rows.length ? rows.map((c) => `
+    <tr>
+      <td>${esc(c.name)}</td><td>${esc(c.template)}</td>
+      <td><select data-client="${c.id}" data-field="tier">${opts(Object.keys(TIERS), c.tier)}</select></td>
+      <td>${money(c.amount)}${TIERS[c.tier] === "retainer" ? "/mo" : ""}</td>
+      <td>${esc(c.start)}</td>
+      <td><select data-client="${c.id}" data-field="status">${opts(["Active", "Completed", "Churned"], c.status)}</select></td>
+      <td><button class="link" data-del-client="${c.id}" aria-label="Delete">✕</button></td>
+    </tr>`).join("") : `<tr><td colspan="7" class="muted">No clients yet. Your first one is a Starter build.</td></tr>`;
+}
+
+function renderDeals() {
+  const order = (d) => STAGES.indexOf(d.stage);
+  const rows = [...state.deals].sort((a, b) => order(a) - order(b));
+  $("#dealRows").innerHTML = rows.length ? rows.map((d) => `
+    <tr>
+      <td>${esc(d.name)}</td><td>${esc(d.source)}</td><td>${esc(d.template)}</td><td>${money(d.value)}</td>
+      <td><select data-deal="${d.id}">${opts(STAGES, d.stage)}</select></td>
+      <td><button class="link" data-del-deal="${d.id}" aria-label="Delete">✕</button></td>
+    </tr>`).join("") : `<tr><td colspan="6" class="muted">No deals yet. Log every positive reply here.</td></tr>`;
+  const counts = STAGES.map((s) => `${s}: ${state.deals.filter((d) => d.stage === s).length}`).join(" · ");
+  const won = state.deals.filter((d) => d.stage === "Won").length;
+  const decided = won + state.deals.filter((d) => d.stage === "Lost").length;
+  $("#pipeSummary").textContent = counts + (decided ? ` · Win rate ${Math.round((won / decided) * 100)}%` : "");
+}
+
+function renderScorecard() {
+  $("#scoreHead").innerHTML = `<th>Week of</th>` + SCORE_FIELDS.map((f) => `<th>${esc(f.label)}<br><span class="muted">${f.target}</span></th>`).join("") + "<th></th>";
+  const rows = [...state.weeks].sort((a, b) => String(b.week).localeCompare(a.week));
+  $("#scoreRows").innerHTML = rows.length ? rows.map((w) => `
+    <tr><td>${esc(w.week)}</td>${SCORE_FIELDS.map((f) => {
+      const v = +w[f.key] || 0;
+      return `<td class="${v >= f.target ? "good" : "bad"}">${v.toLocaleString()}</td>`;
+    }).join("")}<td><button class="link" data-del-week="${w.id}" aria-label="Delete">✕</button></td></tr>`).join("")
+    : `<tr><td colspan="${SCORE_FIELDS.length + 2}" class="muted">Log your first week every Monday.</td></tr>`;
+}
+
+function renderCalc() {
+  const v = (k) => +(state.calc[k] ?? CALC_FIELDS.find((f) => f.key === k).def);
+  const m = metrics();
+  const target = v("target"), avgR = v("avgRetainer"), avgP = v("avgProject"), ppm = v("projectsPerMonth");
+  const close = v("closeRate") / 100, r2c = v("replyToCall") / 100, pos = v("positiveRate") / 100, cold = v("coldShare") / 100;
+  const projectRev = ppm * avgP;
+  const retainersNeeded = avgR > 0 ? Math.ceil(Math.max(0, target - projectRev) / avgR) : 0;
+  const retainerGap = Math.max(0, retainersNeeded - m.retainers);
+  const calls = close > 0 ? ppm / close : 0;
+  const coldCalls = calls * cold;
+  const positives = r2c > 0 ? coldCalls / r2c : 0;
+  const sends = pos > 0 ? positives / pos : 0;
+  const rows = [
+    ["Project revenue per month", money(projectRev)],
+    ["Retainers needed to cover the rest", retainersNeeded],
+    ["Active retainers now", m.retainers],
+    ["Retainers still to convert", retainerGap],
+    ["Sales calls needed per month", Math.ceil(calls)],
+    ["…of which from cold email", Math.ceil(coldCalls)],
+    ["Positive replies needed per month", Math.ceil(positives)],
+    ["Cold emails per month", Math.ceil(sends).toLocaleString()],
+    ["Cold emails per week", Math.ceil(sends / 4.33).toLocaleString()],
+    ["Inboxes needed (30 sends/day, 22 days)", Math.ceil(sends / (30 * 22))]
+  ];
+  $("#calcOut").innerHTML = rows.map(([a, b]) => `<tr><td>${a}</td><td>${b}</td></tr>`).join("");
+}
+
+function renderSteps() {
+  $("#steps").innerHTML = STEPS.map((s, i) => `
+    <li><input type="checkbox" id="st${i}" data-step="${i}"${state.steps[i] ? " checked" : ""}>
+    <label for="st${i}">${esc(s)}</label></li>`).join("");
+}
+
+function render() { renderStats(); renderClients(); renderDeals(); renderScorecard(); renderCalc(); renderSteps(); }
+
+// ---- one-time form setup ----
+function initForms() {
+  const cf = $("#clientForm");
+  cf.template.innerHTML = opts(TEMPLATES);
+  cf.tier.innerHTML = opts(Object.keys(TIERS));
+  cf.start.value = today();
+  const df = $("#dealForm");
+  df.source.innerHTML = opts(SOURCES);
+  df.template.innerHTML = opts(TEMPLATES);
+
+  const sf = $("#scoreForm");
+  sf.innerHTML = `<label>Week of<input name="week" type="date" required value="${today()}"></label>` +
+    SCORE_FIELDS.map((f) => `<label>${esc(f.label)}<input name="${f.key}" type="number" min="0" value="0"></label>`).join("") +
+    `<button class="primary" type="submit">Log week</button>`;
+
+  const calc = $("#calcForm");
+  calc.innerHTML = CALC_FIELDS.map((f) =>
+    `<label>${esc(f.label)}<input name="${f.key}" type="number" min="0" step="any" value="${esc(state.calc[f.key] ?? f.def)}"></label>`).join("");
+}
+
+function bind() {
+  document.querySelectorAll('[role="tab"]').forEach((t) => t.addEventListener("click", () => {
+    document.querySelectorAll('[role="tab"]').forEach((x) => x.setAttribute("aria-selected", x === t));
+    document.querySelectorAll("[data-panel]").forEach((p) => p.classList.toggle("hidden", p.dataset.panel !== t.dataset.tab));
+  }));
+
+  $("#clientForm").addEventListener("submit", (e) => {
+    e.preventDefault();
+    const f = Object.fromEntries(new FormData(e.target));
+    state.clients.push({ id: uid(), ...f, amount: +f.amount, status: "Active" });
+    e.target.name.value = ""; e.target.amount.value = "";
+    save();
+  });
+  $("#dealForm").addEventListener("submit", (e) => {
+    e.preventDefault();
+    const f = Object.fromEntries(new FormData(e.target));
+    state.deals.push({ id: uid(), ...f, value: +f.value, stage: "Lead", created: today() });
+    e.target.name.value = ""; e.target.value.value = "";
+    save();
+  });
+  $("#scoreForm").addEventListener("submit", (e) => {
+    e.preventDefault();
+    const f = Object.fromEntries(new FormData(e.target));
+    SCORE_FIELDS.forEach((s) => { f[s.key] = +f[s.key] || 0; });
+    state.weeks = state.weeks.filter((w) => w.week !== f.week);
+    state.weeks.push({ id: uid(), ...f });
+    save();
+  });
+  $("#calcForm").addEventListener("input", (e) => {
+    if (e.target.name) { state.calc[e.target.name] = +e.target.value; save(); }
+  });
+
+  document.addEventListener("change", (e) => {
+    const t = e.target;
+    if (t.dataset.client) {
+      const c = state.clients.find((x) => x.id === t.dataset.client);
+      if (c) { c[t.dataset.field] = t.value; save(); }
+    } else if (t.dataset.deal) {
+      const d = state.deals.find((x) => x.id === t.dataset.deal);
+      if (!d) return;
+      d.stage = t.value;
+      // Winning a deal creates the client record so revenue shows up immediately.
+      if (t.value === "Won" && !d.clientId) {
+        const c = { id: uid(), name: d.name, template: d.template, tier: "Starter", amount: +d.value, start: today(), status: "Active" };
+        state.clients.push(c); d.clientId = c.id;
+      }
+      save();
+    } else if (t.dataset.step !== undefined) {
+      state.steps[t.dataset.step] = t.checked; save();
+    }
+  });
+
+  document.addEventListener("click", (e) => {
+    const t = e.target;
+    const del = (list, id) => { state[list] = state[list].filter((x) => x.id !== id); save(); };
+    if (t.dataset.delClient && confirm("Delete this client?")) del("clients", t.dataset.delClient);
+    if (t.dataset.delDeal && confirm("Delete this deal?")) del("deals", t.dataset.delDeal);
+    if (t.dataset.delWeek && confirm("Delete this week?")) del("weeks", t.dataset.delWeek);
+  });
+
+  $("#export").addEventListener("click", () => {
+    const blob = new Blob([JSON.stringify(state, null, 2)], { type: "application/json" });
+    const a = Object.assign(document.createElement("a"), { href: URL.createObjectURL(blob), download: `goaldenway-${today()}.json` });
+    a.click(); URL.revokeObjectURL(a.href);
+  });
+  $("#import").addEventListener("click", () => $("#importFile").click());
+  $("#importFile").addEventListener("change", async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    try {
+      state = Object.assign(blank(), JSON.parse(await file.text()));
+      initForms(); save();
+    } catch { alert("That file isn't a valid Goaldenway export."); }
+    e.target.value = "";
+  });
+}
+
+initForms();
+bind();
+render();
+</script>
+</body>
+</html>
