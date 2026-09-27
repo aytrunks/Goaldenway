@@ -20,6 +20,7 @@ The rule behind all of it: **only do activities that correlate with revenue.**
 | [`playbook/02-templates.md`](playbook/02-templates.md) | How templates work: the 80/20 rule, pricing, and delivery |
 | [`templates/`](templates/) | The 5 productized templates, each with its own build spec |
 | [`playbook/03-lead-generation.md`](playbook/03-lead-generation.md) | Cold email infrastructure, sequences, Upwork/Fiverr, and communities |
+| [`outreach/cold-email-speed-to-lead.md`](outreach/cold-email-speed-to-lead.md) | A ready-to-send 3-email cold sequence, reply scripts, and sending rules |
 | [`playbook/04-retain-and-ascend.md`](playbook/04-retain-and-ascend.md) | The package ladder, retainers, and upsell scripts |
 | [`playbook/05-repeat-operating-cadence.md`](playbook/05-repeat-operating-cadence.md) | Weekly scorecard, the VA SOP, and reinvestment rules |
 | [`dashboard/index.html`](dashboard/index.html) | A single-file tracker for pipeline, clients, MRR, and your gap to $25K |
