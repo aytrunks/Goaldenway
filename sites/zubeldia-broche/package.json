@@ -1,0 +1,12 @@
+{
+  "name": "zubeldia-broche",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "nodemailer": "^10.0.12"
+  },
+  "devDependencies": {
+    "@netlify/functions": "^6.0.0",
+    "@types/nodemailer": "^8.0.2"
+  }
+}
