@@ -1,0 +1,85 @@
+{
+  "_source": "Transcribed verbatim from 12 iPhone screenshots of sunnypawnandjewelry.com (mobile layout, 2026-10-06). Live site not reachable from this environment.",
+  "header": { "brand": "Sunny Pawn & Jewelry", "logo_word": "PAWN" },
+  "hero": {
+    "welcome": "Welcome to Sunny Pawn & Jewelry",
+    "headline": ["BRIGHT DEALS.", "HONEST SERVICE.", "ALWAYS SUNNY."],
+    "cta": "Shop Now"
+  },
+  "service_cards_white": [
+    { "title": "Cash Loans", "body": "Get fast cash using your valuables as collateral. No credit check, just bring a valid ID and eligible items like jewelry, electronics, instruments, or firearms." },
+    { "title": "Sell To Us", "body": "Turn items into instant cash. We’ll inspect, make a fair offer, and pay you on the spot." },
+    { "title": "Buy From Us", "body": "Shop quality pre-owned items in-store or online. Every item is tested, ready to use, and new arrivals are posted daily." }
+  ],
+  "services_section": {
+    "heading": "Explore Our Services in Cape Coral",
+    "sub": "We make pawning, buying, and selling easy, fair, and stress-free.",
+    "cards_yellow": [
+      { "title": "What We Buy", "body": "We accept jewelry, firearms, musical instruments, and select electronics. Not sure? Send us a photo!", "button": "Learn More" },
+      { "title": "Pawn Loans Made Easy", "body": "Get fast cash without selling your items. Short-term collateral loans with no credit checks.", "button": "Learn More" },
+      { "title": "Get a Free Online Quote", "body": "Send a photo of your item and get an estimated offer from our team — no need to visit right away.", "button": "Get A Quote" },
+      { "title": "FFL Firearm Transfers", "body": "We’re a licensed FFL dealer. Trust us for smooth, secure firearm transfers and pawns.", "button": "Learn More" },
+      { "title": "Layaway Available", "body": "Found something you love? Reserve it with just 20% down and enjoy 4 months to pay.", "button": "Learn More" },
+      { "title": "Why Choose Us?", "body": "Family-operated. Friendly service. 300+ 5-star reviews. Come see why locals trust Sunny.", "button": "Read Reviews" }
+    ]
+  },
+  "sell_banner": {
+    "heading": "Sell Your Items. Get Paid Today.",
+    "body": "Got gold, tools, or gear you’re not using? Bring it in. We’ll give you a fair offer and cash on the spot.",
+    "cta": "Get A Quote"
+  },
+  "brands": { "heading": "Brands We Accept", "visible_logos": ["HUBLOT", "BVLGARI"] },
+  "stats": [
+    { "value": "300+", "label": ["5-star", "Google reviews"] },
+    { "value": "100%", "label": ["Satisfaction", "guaranteed"] }
+  ],
+  "testimonials": {
+    "heading": "Testimonies",
+    "review": {
+      "rating": "5",
+      "stars": 5,
+      "date": "Jul 08, 2026",
+      "text_truncated": "The ONLY pawn shop I return to again and again. The customer service is outstanding and they have the best rates for pawns and purchases. I highly rec...",
+      "more_link": "More",
+      "author": "Ms87Dodge",
+      "avatar_letter": "M",
+      "source": "Google"
+    },
+    "pagination_visible": ["1", "...", "5", "6", "7", "8", "9"],
+    "pagination_active": "9",
+    "cta": "Read Reviews"
+  },
+  "about": {
+    "heading": "About Sunny Pawn & Jewelry",
+    "subheading": "Cape Coral’s Trusted Pawn Shop for Jewelry, Firearms, and More",
+    "body": "Sunny Pawn & Jewelry is a family-operated business dedicated to offering practical loan solutions and unbeatable prices. Whether you're looking for fast cash or gently used items at great value, our team is here to help with honesty and heart.",
+    "mission_label": "Our mission",
+    "mission": "is to become the go-to short-term lender in our community by providing proven financing solutions, genuine service, and a commitment to our customers.",
+    "checks": [
+      "Transparent, fair pawn loans with no pressure",
+      "Great prices on quality jewelry, tools, electronics, and more",
+      "A trusted local business built on respect and reliability"
+    ]
+  },
+  "how_to_pay": {
+    "heading_partial": "How to Pay Your Loan or",
+    "steps_visible": [
+      { "title": "Get A Secure Text", "body": "We'll inspect and appraise your item on the spot" },
+      { "title": "Create Your Online Account", "body": "Accept the offer, sign the loan agreement, and walk out with cash in minutes." }
+    ],
+    "next_heading": "Want A Faster Way?"
+  },
+  "footer": {
+    "name": "Sunny Pawn and Jewelry",
+    "phone": "(239) 539-3470",
+    "facebook": "Sunny Pawn & Jewelry",
+    "hours": ["Monday – Friday: 9:00am – 6:00pm", "Saturday: 9:00am - 5:00pm", "Sunday: 10:00am - 3:00pm"],
+    "columns": {
+      "Services": ["Pawn Loan", "Sell To Us", "Buy From Us", "Layaway"],
+      "About Us": ["Contact Us", "About Us", "About Us", "Get A Quote"],
+      "Legal": ["Terms & Conditions", "Privacy Policy"]
+    },
+    "map_link": "Open in Maps"
+  },
+  "bottom_nav": ["Our Services", "Shop Online", "Home", "About Us", "Contact Us"]
+}
